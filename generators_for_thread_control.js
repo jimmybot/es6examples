@@ -18,7 +18,7 @@ function main() {
         let ret
 
         // Do some kind of slow async thing
-        let waiter = new Promise(
+        let promise = new Promise(
             function (res, rej) {
                 setTimeout(
                 () => res(55),
@@ -29,7 +29,7 @@ function main() {
 
         // This looks like a callback but all it does is restart this thread
         // when the ret value is ready to be processed
-        waiter.then(function(value) {
+        promise.then(function(value) {
             console.log("Promise resolved")
             ret = value
             t.next()
