@@ -41,10 +41,13 @@ annotate("xrange", function () {
 
 annotate("custom iterator", function() {
 
+    // Aside on how Symbols work
     console.log("Aside: Symbols are unique for each call")
     let compareSymbols = 'Symbol("north") === Symbol("north")'
     console.log(compareSymbols, "is", eval(compareSymbols), "\n")
 
+    // Let's say we have objects that have cardinal direction properties
+    // And we want to go through them one by one
     const NW = Symbol("north west")
     const N = Symbol("north")
     const NE = Symbol("north east")
