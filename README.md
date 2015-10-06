@@ -6,7 +6,7 @@ For understanding generators, check out:
 - generators_for_thread_control.js
 
 For understanding ES6 classes and decorators, check out:
-- UnitTest.js and GrueTest.js, which inherits from UnitTest
-- LinkedList.js
+- UnitTest and GrueTest, which inherits from UnitTest
+- LinkedList
 
 LinkedList.js also shows a good case for creating your own iterator
