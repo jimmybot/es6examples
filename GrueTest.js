@@ -16,7 +16,7 @@ class GrueTest extends UnitTest {
     }
 
     // In ES7 we could decorate right here where the definition is rather than below
-    // @test
+    // @UnitTest.test
     colorTest() {
         this.helperMethod()
         this.eq("green", "green")
@@ -25,7 +25,7 @@ class GrueTest extends UnitTest {
         this.lt("blue", "green")
     }
 
-    // @test
+    // @UnitTest.test
     badTest() {
         this.eq(5, 2 + 3)
         this.eq(5, 2 + 2)
@@ -33,7 +33,7 @@ class GrueTest extends UnitTest {
         this.gt("blue", "green")
     }
 
-    // @skip("Hmm... doesn't work. Fix this with philosophy later.")
+    // @UnitTest.skip("Hmm... doesn't work. Fix this with philosophy later.")
     grueTest() {
         this.eq("green", "blue")
         this.eq("blue", "green")
