@@ -38,11 +38,31 @@ class LinkedListTest extends UnitTest {
         this.eq("blue", l.shift())
         this.eq("green", l.pop())
     }
+
+    // @UnitTest.test
+    testIteration() {
+        let l = new LinkedList()
+        let expected_values = ["green", "blue", "grue"]
+        let values = []
+
+        l.push("green")
+        l.push("blue")
+        l.push("grue")
+
+        for (let v of l) {
+            values.push(v.getValue())
+        }
+
+        for (let i=0; i<expected_values.length; i++) {
+            this.eq(expected_values[i], values[i])
+        }
+    }
 }
 // Decorate the methods that are test methods
 LinkedListTest.prototype.testPushPop = UnitTest.test(LinkedListTest.prototype.testPushPop)
 LinkedListTest.prototype.testShiftUnshift = UnitTest.test(LinkedListTest.prototype.testShiftUnshift)
-LinkedListTest.prototype.textMixedOps = UnitTest.test(LinkedListTest.prototype.testMixedOps)
+LinkedListTest.prototype.testMixedOps = UnitTest.test(LinkedListTest.prototype.testMixedOps)
+LinkedListTest.prototype.testIteration = UnitTest.test(LinkedListTest.prototype.testIteration)
 
 // Run the tests
 let llt = new LinkedListTest()

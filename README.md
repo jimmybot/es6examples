@@ -10,6 +10,8 @@ For understanding generators, including how it can be used to avoid callback-hel
 
 For understanding ES6 classes and decorators (technically ES7, but goes well with classes), check out:
 - [UnitTest](UnitTest.js) and [GrueTest](GrueTest.js), which inherits from UnitTest
-- [LinkedList](LinkedList.js)
+- [LinkedList](LinkedList.js) and [LinkedListTest](LinkedListTest.js)
 
-LinkedList also shows a good case for creating your own iterator, which also makes use of a built-in Symbol.
+The test files are executable, ie `node GrueTest.js` or `node LinkedListTest.js`
+
+LinkedList also shows a good case for creating your own iterator, which also makes use of a built-in Symbol, Symbol.iterator.

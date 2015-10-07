@@ -82,6 +82,8 @@ class LinkedList {
     }
 
     render() {
+        // Iterate over the nodes of the LinkedList and print the prev / value / next
+        // Custom iteration of the object is accomplished by defining the Symbol.iterator method above
         for (let n of this) {
             console.log(n.toString())
         }
