@@ -14,4 +14,4 @@ For understanding ES6 classes and decorators (technically ES7, but goes well wit
 
 The test files are executable, ie `node GrueTest.js` or `node LinkedListTest.js`
 
-LinkedList also shows a good case for creating your own iterator, which also makes use of a built-in Symbol, Symbol.iterator.
+LinkedList also shows a good case for creating your own iterator, which also makes use of a built-in `Symbol`, `Symbol.iterator`.
