@@ -2,7 +2,7 @@
 
 let process = require("process")
 
-// A toy unit testing framework to show ES6 classes and why decorators are much nicer
+// A toy, minimally usable, unit testing framework to show ES6 classes and why decorators are much nicer
 class UnitTest {
     constructor() {
         // passed and failures need to be initialized before each testMethod
@@ -57,34 +57,62 @@ class UnitTest {
         return retfn
     }
 
-    // In ES7: @comparison
-    eq(expected, testValue) {
-        return expected === testValue
+    // .eq will compare arrays and iterable objects for you correctly if the structure is not nested (depth of 1)
+    // 
+    // In ES7: @UnitTest.comparison wouldn't work here because we want to
+    // decorate the original function, but then give it a new name
+    _eq(expected, testValue) {
+        let ret
+
+        // If the object is iterable, eg Array, test each element
+        // There's no nice syntax for iterating simlutaneously through two iterables together so we'll do it ourselves
+        if (expected[Symbol.iterator] && testValue[Symbol.iterator]) {
+            let nxt,
+                iter = testValue[Symbol.iterator]()
+
+            ret = true
+            for (let v of expected) {
+                nxt = iter.next()
+                // Check nxt.done to ensure same length
+                if (nxt.done || v !== nxt.value) {
+                    ret = false
+                    break
+                }
+            }
+
+        // The normal case, do a direct comparison
+        } else {
+            ret = (expected === testValue)
+        }
+
+        return ret
     }
 
-    // @comparison
-    ne(notExpected, testValue) {
-        return notExpected !== testValue
+    // @UnitTest.comparison would not work
+    // Note we wouldn't be able to call the original .eq if
+    // we used ES7 decorators
+    _ne(notExpected, testValue) {
+        return !(this._eq(notExpected, testValue))
     }
 
-    // @comparison
-    lt(lowerBound, testValue) {
+    // @UnitTest.comparison would not work
+    _lt(lowerBound, testValue) {
         return lowerBound < testValue
     }
 
-    // @comparison
-    gt(upperBound, testValue) {
+    // @UnitTest.comparison would not work
+    _gt(upperBound, testValue) {
         return upperBound > testValue
     }
 
-    // @comparison
-    lte(lowerBound, testValue) {
-        return lowerBound <= testValue
+    // @UnitTest.comparison would not work
+    _lte(lowerBound, testValue) {
+        return !(this._gt(lowerBound, testValue))
     }
 
-    // @comparison
-    gte(upperBound, testValue) {
-        return upperBound >= testValue
+    // @UnitTest.comparison would not work
+    _gte(upperBound, testValue) {
+        return !(this._lt(upperBound, testValue))
     }
 
     run() {
@@ -97,12 +125,12 @@ class UnitTest {
     }
 }
 
-// Manual decoration, far from the original function definition :(
-UnitTest.prototype.eq = UnitTest.comparison(UnitTest.prototype.eq)
-UnitTest.prototype.ne = UnitTest.comparison(UnitTest.prototype.ne)
-UnitTest.prototype.lt = UnitTest.comparison(UnitTest.prototype.lt)
-UnitTest.prototype.gt = UnitTest.comparison(UnitTest.prototype.gt)
-UnitTest.prototype.lte = UnitTest.comparison(UnitTest.prototype.lte)
-UnitTest.prototype.gte = UnitTest.comparison(UnitTest.prototype.gte)
+// Manual decoration required, because we are also renaming
+UnitTest.prototype.eq = UnitTest.comparison(UnitTest.prototype._eq)
+UnitTest.prototype.ne = UnitTest.comparison(UnitTest.prototype._ne)
+UnitTest.prototype.lt = UnitTest.comparison(UnitTest.prototype._lt)
+UnitTest.prototype.gt = UnitTest.comparison(UnitTest.prototype._gt)
+UnitTest.prototype.lte = UnitTest.comparison(UnitTest.prototype._lte)
+UnitTest.prototype.gte = UnitTest.comparison(UnitTest.prototype._gte)
 
 module.exports = UnitTest

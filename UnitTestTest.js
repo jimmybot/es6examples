@@ -29,6 +29,12 @@ class UnitTestTest extends UnitTest {
     }
 
     // @UnitTest.test
+    arrayComparisonTest() {
+        this.eq([],[])
+        this.eq([1,4,6,4,1],[1,4,6,4,1])
+    }
+
+    // @UnitTest.test
     badTest() {
         this.eq(5, 2 + 3)
         this.eq(5, 2 + 2)
@@ -47,6 +53,7 @@ class UnitTestTest extends UnitTest {
 // Annoying manual decoration far from function definition.
 // Decorators would be much more concise and in the right place.
 UnitTestTest.prototype.colorTest = UnitTest.test(UnitTestTest.prototype.colorTest)
+UnitTestTest.prototype.arrayComparisonTest = UnitTest.test(UnitTestTest.prototype.arrayComparisonTest)
 UnitTestTest.prototype.badTest = UnitTest.test(UnitTestTest.prototype.badTest)
 UnitTestTest.prototype.grueTest = UnitTest.skip(
     UnitTestTest.prototype.grueTest,

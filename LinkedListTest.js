@@ -41,21 +41,28 @@ class LinkedListTest extends UnitTest {
 
     // @UnitTest.test
     testIteration() {
-        let l = new LinkedList()
+        let l = new LinkedList(),
+            l2 = new LinkedList()
         let expected_values = ["green", "blue", "grue"]
         let values = []
 
-        l.push("green")
-        l.push("blue")
-        l.push("grue")
+        for (let v of expected_values) {
+            l.push(v)
+            l2.push(v)
+        }
 
         for (let v of l) {
-            values.push(v.getValue())
+            values.push(v)
         }
 
-        for (let i=0; i<expected_values.length; i++) {
-            this.eq(expected_values[i], values[i])
-        }
+        // Compare two Arrays
+        this.eq(expected_values, values)
+
+        // Compare Array directly with the LinkedList since eq knows about iterables
+        this.eq(expected_values, l)
+
+        // Compare two LinkedLists
+        this.eq(l, l2)
     }
 }
 // Decorate the methods that are test methods

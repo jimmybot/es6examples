@@ -4,14 +4,33 @@ class LinkedList {
     constructor() {
         this.first = null
         this.last = null
+
+        // This iterator returns LinkedListNodes
+        // Usage: for (node of myLinkedList.getNodes()) { // do something }
+        let self = this
+        this.nodes = {
+            [Symbol.iterator]: function* () {
+                let next = self.first
+                while (next) {
+                    yield next
+                    next = next.getNext()
+                }
+            }
+        }
     }
 
+    // This iterator returns the value in each node
+    // Usage: for (node of myLinkedList) { // do something }
     *[Symbol.iterator]() {
         let next = this.first
         while (next) {
-            yield next
+            yield next.value
             next = next.getNext()
         }
+    }
+
+    getNodes() {
+        return this.nodes
     }
 
     getFirst() {
@@ -84,7 +103,7 @@ class LinkedList {
     render() {
         // Iterate over the nodes of the LinkedList and print the prev / value / next
         // Custom iteration of the object is accomplished by defining the Symbol.iterator method above
-        for (let n of this) {
+        for (let n of this.getNodes()) {
             console.log(n.toString())
         }
     }
