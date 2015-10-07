@@ -2,6 +2,9 @@
 
 let UnitTest = require('./UnitTest')
 
+// A nonsensical set of tests to demonstrate UnitTest
+// These aren't tests of UnitTest since some are meant to fail as a demonstration
+// Also it's probably weird to be testing the framework with itself
 class GrueTest extends UnitTest {
 
     constructor() {
