@@ -18,6 +18,8 @@ function main() {
         let ret
 
         // Do some kind of slow async thing
+        // Here our Promise just waits 3 seconds and then resolves,
+        // and passes a value of 55 to the then callback
         let promise = new Promise(
             function (res, rej) {
                 setTimeout(
@@ -28,7 +30,7 @@ function main() {
         )
 
         // This looks like a callback but all it does is restart this thread
-        // when the ret value is ready to be processed
+        // when the ret value, here 55, is ready to be processed
         promise.then(function(value) {
             console.log("Promise resolved")
             ret = value
@@ -36,11 +38,13 @@ function main() {
         })
 
 
-
+        // Calling processValue before yield is not correct
         // The return value from the Promise isn't ready to be used yet
         processValue(ret)
 
         // Let's give up control and let other stuff run while we wait
+        // Notice yield is pretty ugly here to have to do manually
+        // Async/await in ES7 removes the need to have to do this yourself
         yield
 
         // The return value from the Promise is ready to be processed
