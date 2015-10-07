@@ -29,8 +29,9 @@ function main() {
             }
         )
 
-        // This looks like a callback but all it does is restart this thread
-        // when the ret value, here 55, is ready to be processed
+        // This is a trampoline: it looks like a callback,
+        // but all it does is restart this thread when the ret value,
+        // here 55, is ready to be processed
         promise.then(function(value) {
             console.log("Promise resolved")
             ret = value
