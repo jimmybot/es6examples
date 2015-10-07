@@ -7,7 +7,8 @@ You'll need `"use strict";` if you want to use `let` or `class`.
 For understanding generators, including how it can be used to avoid callback-hell via green-threads, check out:
 - [generators_for_efficient_iteration.js](generators_for_efficient_iteration.js)
 - [generators_for_thread_control.js](generators_for_thread_control.js)
-generators_for_thread_control.js also has an example of ES6 Promises
+
+generators_for_thread_control.js also demonstrates ES6 Promises
 
 For understanding ES6 classes and decorators (technically ES7, but goes well with classes), check out:
 - [UnitTest](UnitTest.js) and [UnitTestTest](UnitTestTest.js), which inherits from UnitTest
