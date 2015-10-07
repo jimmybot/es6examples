@@ -3,9 +3,9 @@
 let UnitTest = require('./UnitTest')
 
 // A nonsensical set of tests to demonstrate UnitTest
-// These aren't tests of UnitTest since some are meant to fail as a demonstration
+// These aren't truly tests of UnitTest since some are meant to fail as a demonstration
 // Also it's probably weird to be testing the framework with itself
-class GrueTest extends UnitTest {
+class UnitTestTest extends UnitTest {
 
     constructor() {
         // It's required that you call parent's constructor
@@ -46,12 +46,12 @@ class GrueTest extends UnitTest {
 
 // Annoying manual decoration far from function definition.
 // Decorators would be much more concise and in the right place.
-GrueTest.prototype.colorTest = UnitTest.test(GrueTest.prototype.colorTest)
-GrueTest.prototype.badTest = UnitTest.test(GrueTest.prototype.badTest)
-GrueTest.prototype.grueTest = UnitTest.skip(
-    GrueTest.prototype.grueTest,
+UnitTestTest.prototype.colorTest = UnitTest.test(UnitTestTest.prototype.colorTest)
+UnitTestTest.prototype.badTest = UnitTest.test(UnitTestTest.prototype.badTest)
+UnitTestTest.prototype.grueTest = UnitTest.skip(
+    UnitTestTest.prototype.grueTest,
     "Hmm... doesn't work. Fix this with philosophy later."
 )
 
-let grueTest = new GrueTest()
-grueTest.run()
+let unitTestTest = new UnitTestTest()
+unitTestTest.run()
