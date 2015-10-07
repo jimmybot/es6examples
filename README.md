@@ -12,6 +12,6 @@ For understanding ES6 classes and decorators (technically ES7, but goes well wit
 - [UnitTest](UnitTest.js) and [UnitTestTest](UnitTestTest.js), which inherits from UnitTest
 - [LinkedList](LinkedList.js) and [LinkedListTest](LinkedListTest.js)
 
-The test files are executable, ie `node GrueTest.js` or `node LinkedListTest.js`
+The test files are executable, ie `node UnitTestTest.js` or `node LinkedListTest.js`
 
 LinkedList also shows a good case for creating your own iterator, which also makes use of a built-in `Symbol`, `Symbol.iterator`.
