@@ -1,7 +1,8 @@
 "use strict";
 
-let UnitTest = require('./UnitTest')
-let LinkedList = require('./LinkedList')
+let UnitTest = require('./UnitTest'),
+    LinkedList = require('./LinkedList').LinkedList,
+    LinkedListNode = require('./LinkedList').LinkedListNode
 
 class LinkedListTest extends UnitTest {
 
@@ -64,12 +65,29 @@ class LinkedListTest extends UnitTest {
         // Compare two LinkedLists
         this.eq(l, l2)
     }
+
+    // @UnitTest.test
+    testNodeIteration() {
+        let n_nodes = 0,
+            l = new LinkedList()
+        l.push("green")
+        l.push("blue")
+        l.push("grue")
+
+        for (let n of l.getNodes()) {
+            n_nodes += 1
+            this.eq(true, n instanceof LinkedListNode)
+        }
+
+        this.eq(3, n_nodes)
+    }
 }
 // Decorate the methods that are test methods
 LinkedListTest.prototype.testPushPop = UnitTest.test(LinkedListTest.prototype.testPushPop)
 LinkedListTest.prototype.testShiftUnshift = UnitTest.test(LinkedListTest.prototype.testShiftUnshift)
 LinkedListTest.prototype.testMixedOps = UnitTest.test(LinkedListTest.prototype.testMixedOps)
 LinkedListTest.prototype.testIteration = UnitTest.test(LinkedListTest.prototype.testIteration)
+LinkedListTest.prototype.testNodeIteration = UnitTest.test(LinkedListTest.prototype.testNodeIteration)
 
 // Run the tests
 let llt = new LinkedListTest()

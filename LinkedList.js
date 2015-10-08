@@ -1,28 +1,34 @@
 "use strict";
 
+// This iterator returns LinkedListNodes
+// Usage: for (node of myLinkedList.getNodes()) { // do something }
+function nodeIterator(self) {
+    return function* () {
+        let next = linkedLists.get(self).first
+        while (next) {
+            yield next
+            next = next.getNext()
+        }
+    }
+}
+
+// Using WeakMap to implement private variables
+// See the excellent blog post about this technique here: http://fitzgeraldnick.com/weblog/53/
+let linkedLists = new WeakMap()
+
 class LinkedList {
     constructor() {
-        this.first = null
-        this.last = null
-
-        // This iterator returns LinkedListNodes
-        // Usage: for (node of myLinkedList.getNodes()) { // do something }
-        let self = this
-        this.nodes = {
-            [Symbol.iterator]: function* () {
-                let next = self.first
-                while (next) {
-                    yield next
-                    next = next.getNext()
-                }
-            }
-        }
+        // first and last will be private variables
+        linkedLists.set(this, {
+            first: null,
+            last: null
+        })
     }
 
     // This iterator returns the value in each node
     // Usage: for (node of myLinkedList) { // do something }
     *[Symbol.iterator]() {
-        let next = this.first
+        let next = linkedLists.get(this).first
         while (next) {
             yield next.value
             next = next.getNext()
@@ -30,41 +36,48 @@ class LinkedList {
     }
 
     getNodes() {
-        return this.nodes
+        return {
+            [Symbol.iterator]: nodeIterator(this)
+        }
     }
 
     getFirst() {
-        return this.first ? this.first.value : null
+        let first = linkedLists.get(this).first
+        return first ? first.value : null
     }
 
     getLast() {
-        return this.last ? this.last.value : null
+        let last = linkedLists.get(this).last
+        return last ? last.value : null
     }
 
     push(value) {
-        if (this.last) {
+        let pv = linkedLists.get(this)
+        if (pv.last) {
             let n = new LinkedListNode(value)
-            n.setPrevious(this.last)
-            this.last.setNext(n)
-            this.last = n
+            n.setPrevious(pv.last)
+            pv.last.setNext(n)
+            pv.last = n
         } else {
-            this.first = this.last = new LinkedListNode(value)
+            pv.first = pv.last = new LinkedListNode(value)
         }
-        return this.last
+        return pv.last
     }
 
     pop() {
-        let ret, prev
+        let ret,
+            prev,
+            pv = linkedLists.get(this)
 
-        if (this.last) {
-            ret = this.last.getValue()
-            if (this.first === this.last) {
-                this.first = null
-                this.last = null
+        if (pv.last) {
+            ret = pv.last.getValue()
+            if (pv.first === pv.last) {
+                pv.first = null
+                pv.last = null
             } else {
-                prev = this.last.getPrevious()
+                prev = pv.last.getPrevious()
                 prev.setNext(null)
-                this.last = prev
+                pv.last = prev
             }
         } else {
             ret = null
@@ -74,24 +87,27 @@ class LinkedList {
     }
 
     unshift(value) {
-        let lln = new LinkedListNode(value)
-        if (this.first) {
-            lln.setNext(this.first)
-            this.first = this.first.setPrevious(lln)
+        let lln = new LinkedListNode(value),
+            pv = linkedLists.get(this)
+
+        if (pv.first) {
+            lln.setNext(pv.first)
+            pv.first = pv.first.setPrevious(lln)
         } else {
-            this.first = lln
-            this.last = lln
+            pv.first = lln
+            pv.last = lln
         }
     }
 
     shift() {
-        let ret
+        let ret,
+            pv = linkedLists.get(this)
 
-        if (this.first) {
-            ret = this.first.getValue()
-            this.first = this.first.getNext()
-            if (this.first) {
-                this.first.setPrevious(null)
+        if (pv.first) {
+            ret = pv.first.getValue()
+            pv.first = pv.first.getNext()
+            if (pv.first) {
+                pv.first.setPrevious(null)
             }
         } else {
             ret = null
@@ -148,4 +164,7 @@ class LinkedListNode {
     }
 }
 
-module.exports = LinkedList
+module.exports = {
+    LinkedList: LinkedList,
+    LinkedListNode: LinkedListNode
+}

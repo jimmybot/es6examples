@@ -66,7 +66,7 @@ class UnitTest {
 
         // If the object is iterable, eg Array, test each element
         // There's no nice syntax for iterating simlutaneously through two iterables together so we'll do it ourselves
-        if (expected[Symbol.iterator] && testValue[Symbol.iterator]) {
+        if (expected && testValue && expected[Symbol.iterator] && testValue[Symbol.iterator]) {
             let nxt,
                 iter = testValue[Symbol.iterator]()
 
