@@ -19,6 +19,8 @@ let linkedLists = new WeakMap()
 class LinkedList {
     constructor() {
         // first and last will be private variables
+        // if you want to add your own private methods, instead of setting this to an empty object,
+        // you can instatiate from a class only visible in this module
         linkedLists.set(this, {
             first: null,
             last: null
